@@ -1,85 +1,100 @@
-## 🛡 MODX Shield — SafeTV & 404 Cache Killer — Problem-Solving Plugin
+# 🛡 MODX Shield — SafeTV & 404 Cache Killer — Problem-Solving Plugin
 
 ---
 
 ## 📜 Description
 
-In MODX, two common issues can **overload the server** and **bloat the cache**:
+**MODX Shield** is a **two-in-one** plugin that protects your site from two common MODX issues that can **overload the server**, **waste disk space**, and **hurt SEO**:  
 
-1. **Missing `$modx->resource`** — calling TVs in chunks or Fenom templates without a resource context can cause fatal errors.
-2. **Caching the 404 page** — the "Page Not Found" error page gets cached as if it were a valid page.
-   Every unique invalid URL request creates a separate cache file, quickly filling disk space.
+✅ **SafeTV** — prevents fatal errors when `$modx->resource` is missing  
+✅ **Disable404Cache** — stops caching of 404 pages entirely  
 
----
-
-## 🚨 Problem
-
-This leads to:
-
-* **Cache bloat** — thousands of identical error page cache files.
-* **Increased memory/disk usage** — large cache files slow down the site.
-* **Site crashes** — calling TVs without a resource causes errors.
-* **SEO issues** — search engines may index 404 pages as real content.
-* **Performance drop** — unnecessary cache creation increases disk I/O.
-* **Higher hosting bills** — on **pay-as-you-go platforms** like Railway, Vercel, Render, this waste directly increases your monthly costs.
+Works in **both standard chunks** and **Fenom templates**, requires **no external services**, and is **safe for shared hosting**.  
 
 ---
 
-## 🛠 How This Plugin Solves the Problem
+## 🚨 The Problem
 
-**SafeTV + Disable404Cache** is a **single MODX plugin** that fixes both issues:
-
-* **SafeTV**:
-
-  * Handles missing `$modx->resource` safely.
-  * Returns empty strings for TVs instead of throwing errors.
-  * Works in both standard chunks and Fenom templates.
-
-* **Disable404Cache**:
-
-  * Detects 404 pages by **error\_page ID** or **HTTP 404 status code**.
-  * Disables caching for these pages entirely.
-  * Prevents thousands of duplicate cache files from being created.
-  * Reduces disk usage and speeds up response times.
-
+| ❌ Problem | 💥 Impact |
+|-----------|----------|
+| Calling TVs when `$modx->resource` is missing | Fatal errors, broken pages |
+| 404 pages cached like normal content | Thousands of duplicate cache files |
+| Cache bloat from bots & invalid URLs | Increased disk usage, slower site |
+| SEO pollution from indexed 404s | Lower search rankings |
+| Higher hosting bills (Railway, Vercel, etc.) | Wasted storage & bandwidth |
 
 ---
 
-## 🔧 Installation
+## 🛠 How This Plugin Fixes It
 
-1. Go to **Elements → Plugins → Create** in the MODX manager.
-2. Name it, for example: **SafeTV + Disable404Cache**.
-3. Paste the code from this repository.
+| ✅ Feature | 🚀 Benefit |
+|-----------|-----------|
+| **SafeTV** — safely handles missing `$modx->resource` | No fatal errors, stable templates |
+| **Empty return for missing TVs** | Clean output without breaking layout |
+| **Detects 404 by error_page ID & HTTP code** | 100% reliable detection |
+| **Disables cache for 404s** | Stops duplicate cache creation |
+| **Automatic cleanup of existing 404 cache files** | Frees disk space instantly |
+| **Reduces disk I/O** | Faster page loads and better hosting efficiency |
+
+---
+
+## ⚙️ Installation
+
+1. **In MODX**: Go to **Elements → Plugins → Create**.
+2. Name it **MODX Shield — SafeTV & 404 Cache Killer**.
+3. Paste the plugin code from this repository.
 4. Enable events:
-
    * `OnWebPageInit`
    * `OnLoadWebDocument`
    * `OnWebPagePrerender`
-5. Save and clear the MODX cache.
+5. Save → Clear MODX cache → Done! 🎉
 
 ---
 
-## 📌 Problem → Solution
+## 📈 Results You Can Expect
 
-| Problem                                                                 | How This Plugin Solves It                                                                                   |
-| ----------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| Calling TVs when no resource is loaded causes errors                    | Overrides TV calls to safely return empty strings.                                                          |
-| 404 page is cached like a normal page                                   | Detects by error\_page ID and HTTP code 404, disables caching.                                              |
-| Thousands of identical cache files from 404 requests                    | Disables cache generation for 404 + cleans up existing 404 cache files.                                     |
-| Disk space bloat and performance loss                                   | Removes unnecessary cache files and stops them from being created.                                          |
-| SEO pollution with indexed 404 pages                                    | Prevents caching so these pages aren’t seen as “real” content by search engines.                            |
-| Higher monthly hosting costs on pay-as-you-go platforms (Railway, etc.) | Reduces cache size and server I/O, lowering bandwidth and storage usage, which directly cuts monthly bills. |
+After installing:
+
+- 🚀 No more TV-related errors in chunks/Fenom
+- 🗑 **Immediate stop** to 404 cache bloat
+- ⚡ Faster site performance due to reduced disk usage
+- 📉 Lower hosting bills on **usage-based platforms**
+- 🛡 Stable, SEO-friendly MODX setup
+
+---
+
+## 📌 Tech Overview
+
+| Component | Details |
+|-----------|---------|
+| Language | PHP 7.0+ |
+| CMS | MODX Revolution |
+| Hosting | Works on shared, VPS, or cloud |
+| Cache Control | Built-in MODX + custom logic |
+| Compatibility | Chunks, Snippets, Fenom templates |
+| 404 Detection | `error_page` ID + HTTP status code |
 
 ---
 
-## 📈 Result
+## 💻 Tech Stack
 
-After installing this plugin:
-
-* Cache bloat from 404 pages stops immediately.
-* Existing 404 cache files are deleted.
-* Site performance improves due to reduced disk I/O.
-* No more TV-related errors when `$modx->resource` is missing.
-* Monthly hosting costs can **drop** on usage-based billing platforms.
+![PHP](https://img.shields.io/badge/php-%23777BB4.svg?style=for-the-badge&logo=php&logoColor=white)
+![MODX](https://img.shields.io/badge/MODX-%2300AEEF.svg?style=for-the-badge&logo=modx&logoColor=white)
+![Apache](https://img.shields.io/badge/apache-%23D42029.svg?style=for-the-badge&logo=apache&logoColor=white)
+![Nginx](https://img.shields.io/badge/nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white)
+![Fenom](https://img.shields.io/badge/Fenom%20Templates-%2300BFFF.svg?style=for-the-badge&logo=template&logoColor=white)
+![Shared Hosting](https://img.shields.io/badge/shared_hosting-%23FFA500.svg?style=for-the-badge&logo=server&logoColor=white)
+![Cache Optimized](https://img.shields.io/badge/Cache%20Optimized-%23F5A623.svg?style=for-the-badge&logo=cache&logoColor=white)
+![SEO Friendly](https://img.shields.io/badge/SEO%20Friendly-%234CAF50.svg?style=for-the-badge&logo=google&logoColor=white)
+![Error Handling](https://img.shields.io/badge/Error%20Handling-%23C41E3A.svg?style=for-the-badge&logo=bug&logoColor=white)
+![404 Protection](https://img.shields.io/badge/404%20Protection-%2300A4EF.svg?style=for-the-badge&logo=shield&logoColor=white)
 
 ---
+
+## 📦 License
+
+MIT — free to use and modify.
+
+---
+
+### ⭐ If you find this plugin useful, **star the repository** and share it with the MODX community!
